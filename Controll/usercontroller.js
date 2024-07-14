@@ -1,7 +1,7 @@
 const User = require("../models/usermodel");
 const mongoose = require("mongoose");
-const bcrypt =require('bcryptjs');
-const jwt =require ('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
 
@@ -12,7 +12,7 @@ const createUser = async (req, res) => {
     try {
         if (!password) throw new Error("Password is required");
         const hashedPassword = await bcrypt.hash(password, 10);
-        await User.create({firstName, familyName, password: hashedPassword, username, email, roles });
+        await User.create({ firstName, familyName, password: hashedPassword, username, email, roles });
         res.status(201).json({ message: "Registration successful" });
     } catch (error) {
         console.error("Registration error: ", error.message);
@@ -22,31 +22,31 @@ const createUser = async (req, res) => {
 
 
 //login
-const login =async(req,res)=>{
+const login = async (req, res) => {
     const { username, password } = req.body;
     console.log(req.body);
 
-    try{
-        if(!password||!username) throw new error ("password and username is required")
-        const user = await User.findOne({username});
-        if(!user) return res.status(400).json({message:"Credentials Invalid"})
+    try {
+        if (!password || !username) throw new error("password and username is required")
+        const user = await User.findOne({ username });
+        if (!user) return res.status(400).json({ message: "Credentials Invalid" })
 
-        const isMatch =await bcrypt.compare(password, user.password);
-        if(!isMatch) return res.status(400).json({massage:"Credentials Invalid"})
-        
-        if(!process.env.JWT_SECRET) throw new Error ('JWT secrert is not defined');
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.status(400).json({ massage: "Credentials Invalid" })
 
-        const token =jwt.sign({
-            id:user._id, username:user.username
-        },process.env.JWT_SECRET, 
-        {expiresIn:"1h"}
-    )
-    res.json({token});
-    }catch (error){
+        if (!process.env.JWT_SECRET) throw new Error('JWT secrert is not defined');
+
+        const token = jwt.sign({
+            id: user._id, username: user.username
+        }, process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+        )
+        res.json({ token });
+    } catch (error) {
         console.error("Login error: ", error.message);
         res.status(400).json({ message: error.message });
     }
-} 
+}
 
 
 

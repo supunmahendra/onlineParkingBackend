@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 
 
+// https://mongoosejs.com/docs/api/model.html
 
 
 //get all slots
@@ -19,10 +20,10 @@ const getAllSlot = async (req, res) => {
 
 //creat slot
 const createSlot = async (req, res) => {
-    const {spotNo, reservedBy, dateFrom, dateTo} = req.body;
+    const { spotNo, reservedBy, dateFrom, dateTo } = req.body;
     try {
-        const newSlot = await Slots.create({spotNo, reservedBy, dateFrom, dateTo});
-        res.status(201).json({ message: "Registration Slot successful"});
+        const newSlot = await Slots.create({ spotNo, reservedBy, dateFrom, dateTo });
+        res.status(201).json({ message: "Registration Slot successful" });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -45,12 +46,12 @@ const deleteSlot = async (req, res) => {
 
 //update slot
 
-const updateSlot = async (req,res)=>{
-    const {reservedBy, dateFrom, dateTo} =req.body
+const updateSlot = async (req, res) => {
+    const { reservedBy, dateFrom, dateTo } = req.body
     const { id } = req.params;
 
     try {
-        const updateSlot = await Slots.findByIdAndUpdate(id, {reservedBy, dateFrom, dateTo}, );
+        const updateSlot = await Slots.findByIdAndUpdate(id, { reservedBy, dateFrom, dateTo },);
         if (!updateSlot) {
             return res.status(404).json({ massage: error.message });
         }
