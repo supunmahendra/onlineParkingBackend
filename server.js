@@ -6,7 +6,7 @@ const userRoute =require('./routes/userRoute');
 const passportConfig =require('./middleware/passportConfig');
 const checkRoles =require('./middleware/checkRole');
 
-//const parkingRoute =require('./routes/parkingRoute');
+const parkingRoute =require('./routes/parkingRoute');
 
 //inport .env file details
 require('dotenv').config();
@@ -25,7 +25,7 @@ passportConfig(passport);
 
 // routes
 app.use ('/api/users', userRoute)
-//app.use ('/api/parking', parkingRoute)
+app.use ('/api/parking', parkingRoute)
 
 //connection
 mongoose.connect (process.env.MONGO_URI). then(()=>{  

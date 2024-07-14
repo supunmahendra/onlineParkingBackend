@@ -1,14 +1,14 @@
 const mongoose =require('mongoose');
 
-//user
+//Slots
 const parkingSchema = new mongoose.Schema(
     {
-        spotNo: { type: String, required: true, unique: true },
+        spotNo: { type: Number, required: true, unique: true },
         reservedBy: { type: String, required: true },
-        dateFrom : { type: date, required: true, default:date.now },
-        dateTo: { type: date, required: true, default:date.now }
+        dateFrom : { type: Date, default:Date.now },
+        dateTo: { type: Date, default:Date.now }
     },
     { timestamps: true }
   );
 
-module.exports = mongoose.model('parkingUser', userSchema);
+module.exports = mongoose.model('parkingSlot', parkingSchema);

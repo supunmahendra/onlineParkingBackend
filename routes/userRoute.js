@@ -1,9 +1,9 @@
 const express =require('express');
 const router =express.Router()
-const passport =require('passport')
+//const passport =require('passport')
 
 
-const User = require('../models/usermodel')
+//const User = require('../models/usermodel')
 
 
 //import mongoose, { Document } from 'mongoose';
@@ -26,12 +26,12 @@ router.get('/', getAllUser)
 //post register
 router.post('/register', createUser)
 
-//delet
+//delete
 router.delete('/:id', deleteUser)
 
 //patch
-router.patch('/', (req,res)=>{
-    res.send({massage:"patch user"})
-})
+//router.patch('/', (req,res)=>{
+//    res.send({massage:"patch user"})
+//})
 
 module.exports = router;
