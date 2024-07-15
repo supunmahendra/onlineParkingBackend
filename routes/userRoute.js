@@ -12,7 +12,9 @@ const { createUser } = require("../Controll/usercontroller")
 const { getAllUser } = require("../Controll/usercontroller")
 const { getUser } = require("../Controll/usercontroller")
 const { deleteUser } = require("../Controll/usercontroller")
-const { login } = require("../Controll/usercontroller")
+const { login } = require("../Controll/usercontroller");
+const { verify } = require('jsonwebtoken');
+const { verifyToken } = require("../Controll/usercontroller");
 
 //get
 router.get('/:id', getUser)
@@ -29,6 +31,7 @@ router.post('/register', passport.authenticate("jwt", { session: false }), check
 //delete
 router.delete('/:id', passport.authenticate("jwt", { session: false }), checkRoles(["admin"]), deleteUser)
 
+router.get('/verify', verifyToken)
 //patch
 //router.patch('/', (req,res)=>{
 //    res.send({massage:"patch user"})

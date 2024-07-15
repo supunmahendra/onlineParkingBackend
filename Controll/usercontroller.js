@@ -89,10 +89,29 @@ const deleteUser = async (req, res) => {
 
 //opdate single user https://mongoosejs.com/docs/api/model.html
 
+const verifyToken = ()=>{
+    const authHeader =req.headers.authorization
+    const token = authHeader && authHeader.split('')[1];
+    if(!token){
+        return res.status(401).json({message:"no tokens"})
+    } try{
+        const decode =jwt.verify(token, process.env.JWT_SECRET);
+        res.status(200).json({
+            message:"Token is valid",
+            user:{
+                id:decodeURI.id,
+                roles:decode.roles,
+            }
+        })
+    }catch(error){
+        res.status(400).json({message:error.message});
+    }
+}
+
 module.exports = {
     createUser,
     getAllUser,
     getUser,
     deleteUser,
-    login,
+    login,verifyToken,
 };
