@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require("mongoose");
 const passport = require("passport");
+const cors =require('cors')
 
 const userRoute = require('./routes/userRoute');
 const passportConfig = require('./middleware/passportConfig');
@@ -17,8 +18,22 @@ const app = express();
 
 passportConfig(passport);
 
-// middle ware
+const allowedLinks =["http://localhost:5173"]
 
+const corsOptions = {
+    origin: function (origin, callback){
+      if(allowedLinks.indexOf(origin) !== -1 || !origin){
+        callback(null, true)
+      }else{
+        callback(new Error('CORS violation'))
+      }
+    },
+    optionSuccessStatus:200,
+    credentials: true
+  }
+
+// middle ware
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(passport.initialize());
 
